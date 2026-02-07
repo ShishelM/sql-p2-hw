@@ -11,6 +11,21 @@
 - город нахождения магазина;
 - количество пользователей, закреплённых в этом магазине.
 
+```sql
+select CONCAT(s.last_name, ' ', s.first_name) "employee", c2.city,  count(*) "count_customers"
+from customer c
+join staff s on c.store_id = s.store_id
+join store s2 on c.store_id = s2.store_id 
+join address a on s2.address_id = a.address_id 
+join city c2 on a.city_id = c2.city_id 
+group by c.store_id, 1, 2
+HAVING count(c.store_id) > 300
+```
+```
+employee    |city      |count_customers|
+------------+----------+---------------+
+Hillyer Mike|Lethbridge|            326|
+```
 ### Задание 2
 
 Получите количество фильмов, продолжительность которых больше средней продолжительности всех фильмов.
